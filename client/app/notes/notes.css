@@ -1,0 +1,51 @@
+.note,
+#new_note_form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+
+  margin: 0 0 0.5rem 0;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+
+  width: 75%;
+
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
+
+  border-radius: 0.5rem;
+}
+
+.note > button,
+#new_note_form > button {
+  margin-left: auto;
+  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+}
+.note > button:hover,
+#new_note_form > button:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.note:hover,
+#new_note_form:hover {
+  opacity: 0.9;
+}
+
+.note > p {
+  margin-right: 0.25rem;
+  padding: 0.2rem 0.2rem 0.2rem 0;
+}
+
+input {
+  flex: 1;
+
+  padding: 0 0.4rem 0 0.4rem;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--fg_sec);
+
+  border: 0;
+  border-radius: 0.2rem;
+}
+input:focus {
+  outline: none;
+}
