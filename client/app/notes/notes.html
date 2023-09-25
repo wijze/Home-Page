@@ -11,14 +11,23 @@
   <body>
     <main>
       <h1>Notes</h1>
-  
+
       <div id="notes_container"></div>
-  
-      <form id="new_note_form" action="">
-        <input type="text" name="text">
+
+      <form id="new_note_form" action="" autocomplete="off">
+        <input type="text" name="text" />
         <button type="submit">+</button>
       </form>
     </main>
+
+    <div id="note_context_menu">
+      <div id="note_context_menu_delete">
+        <p>delete</p>
+      </div>
+      <div id="note_context_menu_rename">
+        <p>rename</p>
+      </div>
+    </div>
 
     <script>
       create_navbar();

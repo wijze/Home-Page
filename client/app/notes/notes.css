@@ -49,3 +49,12 @@ input {
 input:focus {
   outline: none;
 }
+
+#note_context_menu {
+  display: none;
+
+  position: absolute;
+
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
+}
