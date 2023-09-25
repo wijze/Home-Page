@@ -9,6 +9,8 @@
 
   width: 75%;
 
+  overflow: hidden;
+
   background-color: var(--bg_sec);
   color: var(--fg_sec);
 
@@ -40,6 +42,8 @@ input {
 
   padding: 0 0.4rem 0 0.4rem;
 
+  min-width: 3rem;
+
   background-color: rgba(255, 255, 255, 0.1);
   color: var(--fg_sec);
 
@@ -55,6 +59,22 @@ input:focus {
 
   position: absolute;
 
-  background-color: var(--bg_sec);
-  color: var(--fg_sec);
+  background-color: var(--light_accent);
+  color: var(--dark_accent);
+
+  border-radius: 0.2rem;
+}
+
+#note_config_form {
+  display: none;
+}
+
+#note_context_menu > div {
+  padding: 0.2rem;
+
+  cursor: pointer;
+}
+
+#note_context_menu > div:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }

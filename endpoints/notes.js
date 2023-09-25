@@ -24,6 +24,8 @@ function handlePush(req, res) {
         json.notes[req.body.note.id] = req.body.note;
       } else if (req.body.action == 'delete') {
         delete json.notes[req.body.id];
+      } else if (req.body.action == 'update') {
+        json.notes[req.body.note.id] = req.body.note;
       } else {
         res.status(400).send('invalid action');
         return;
