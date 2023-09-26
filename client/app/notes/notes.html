@@ -15,7 +15,7 @@
       <div id="notes_container"></div>
 
       <form id="new_note_form" action="" autocomplete="off">
-        <input type="text" name="text" />
+        <input type="text" name="text" id="new_note_title" />
         <button type="submit">+</button>
       </form>
     </main>
@@ -30,9 +30,16 @@
     </div>
 
     <form action="" id="note_config_form" autocomplete="off">
-      <label for="note_config_title">Title:</label>
-      <input type="text" name="note_title" id="note_config_title">
-      <button type="submit">Submit</button>
+      <div>
+        <button id="note_config_close">Close</button>
+      </div>
+      <div>
+        <label for="note_config_title">Title:</label>
+        <input type="text" name="note_title" id="note_config_title" />
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
     </form>
 
     <script>

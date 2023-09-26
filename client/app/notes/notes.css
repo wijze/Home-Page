@@ -37,7 +37,7 @@
   padding: 0.2rem 0.2rem 0.2rem 0;
 }
 
-input {
+input#new_note_title {
   flex: 1;
 
   padding: 0 0.4rem 0 0.4rem;
@@ -59,14 +59,11 @@ input:focus {
 
   position: absolute;
 
-  background-color: var(--light_accent);
-  color: var(--dark_accent);
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
 
+  border: 1px solid var(--light_accent);
   border-radius: 0.2rem;
-}
-
-#note_config_form {
-  display: none;
 }
 
 #note_context_menu > div {
@@ -76,5 +73,33 @@ input:focus {
 }
 
 #note_context_menu > div:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#note_config_form {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: flex-start;
+
+  position: fixed;
+
+  width: 20rem;
+  max-width: 50%;
+
+  top: 0px;
+  bottom: 0px;
+  right: -10000px;
+
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+
+  transition: right 0.4s;
+}
+
+#note_config_form > div {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+#note_config_form::first-child {
+  align-self: flex-end;
 }

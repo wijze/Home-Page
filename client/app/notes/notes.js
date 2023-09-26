@@ -3,61 +3,48 @@ var notes = {};
 const id = () =>
   new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
 
+// ------------get elements------------
+
+const notesContextMenu = document.getElementById('note_context_menu');
+
+const notesContextMenuDelete = document.getElementById(
+  'note_context_menu_delete'
+);
+const notesContextMenuRename = document.getElementById(
+  'note_context_menu_rename'
+);
+
+const notesConfigForm = document.getElementById('note_config_form');
+const addNoteForm = document.getElementById('new_note_form');
+
 // ------------note methods------------
 
 function getNotes() {
-  fetch("/notes_endpoint")
+  fetch('/notes_endpoint')
     .then((res) => res.json())
     .then((jsonString) => {
       notes = JSON.parse(jsonString).notes;
-      for (let id in notes){
-        let n = new Note()
-        n.configure(notes[id])
-        notes[id] = n
+      for (let id in notes) {
+        let n = new Note();
+        n.configure(notes[id]);
+        notes[id] = n;
       }
       displayNotes();
     });
 }
 
-const openNotesContextMenu = (e, id) => {
-  e.preventDefault();
-
-  const close = (e) => {
-    notesContextMenu.style.display = "none";
-    document.removeEventListener("click", cancelContextMenu);
-  };
-
-  notesContextMenu.style.left = e.x + "px";
-  notesContextMenu.style.top = e.y + "px";
-  notesContextMenu.style.display = "block";
-  const cancelContextMenu = document.addEventListener("click", close);
-  
-  notesContextMenuDelete.onclick = () => {
-    deleteNote(id);
-    close();
-  };
-  notesContextMenuRename.onclick = () => {
-    notesConfigForm.style.display = 'block'
-    notesConfigForm.onsubmit = (e) => {
-      notesConfigFormSubmitFunction(e, id)
-    };
-    close();
-  };
-  
-};
-
 function displayNotes() {
-  const notesContainer = document.getElementById("notes_container");
-  notesContainer.innerHTML = "";
+  const notesContainer = document.getElementById('notes_container');
+  notesContainer.innerHTML = '';
 
   Object.values(notes).forEach((note) => {
-    const newNode = document.createElement("div");
-    newNode.classList.add("note");
-    const title = document.createElement("p");
+    const newNode = document.createElement('div');
+    newNode.classList.add('note');
+    const title = document.createElement('p');
     title.innerText = note.title;
-    const deleteButton = document.createElement("button");
-    deleteButton.innerText = "D";
-    deleteButton.addEventListener("click", () => {
+    const deleteButton = document.createElement('button');
+    deleteButton.innerText = 'D';
+    deleteButton.addEventListener('click', () => {
       deleteNote(note.id);
     });
 
@@ -71,14 +58,14 @@ function displayNotes() {
 
 function addNote(note) {
   notes[note.id] = note;
-  fetch("/notes_endpoint", {
-    method: "POST",
+  fetch('/notes_endpoint', {
+    method: 'POST',
     body: JSON.stringify({
       note: note.getSavable(),
-      action: "add",
+      action: 'add',
     }),
     headers: {
-      "Content-type": "application/json; charset=UTF-8",
+      'Content-type': 'application/json; charset=UTF-8',
     },
   });
 
@@ -87,14 +74,14 @@ function addNote(note) {
 
 function updateNote(id, newConfig) {
   notes[id].configure(newConfig);
-  fetch("/notes_endpoint", {
-    method: "POST",
+  fetch('/notes_endpoint', {
+    method: 'POST',
     body: JSON.stringify({
       note: notes[id].getSavable(),
-      action: "update",
+      action: 'update',
     }),
     headers: {
-      "Content-type": "application/json; charset=UTF-8",
+      'Content-type': 'application/json; charset=UTF-8',
     },
   });
 
@@ -103,59 +90,88 @@ function updateNote(id, newConfig) {
 
 function deleteNote(id) {
   delete notes[id];
-  fetch("/notes_endpoint", {
-    method: "POST",
+  fetch('/notes_endpoint', {
+    method: 'POST',
     body: JSON.stringify({
       id: id,
-      action: "delete",
+      action: 'delete',
     }),
     headers: {
-      "Content-type": "application/json; charset=UTF-8",
+      'Content-type': 'application/json; charset=UTF-8',
     },
   });
 
   displayNotes();
 }
 
-// ------------functions performed on load------------
+// ------------event handler functions------------
 
-const notesContextMenu = document.getElementById("note_context_menu");
-notesContextMenu.onclick = (e) => {
-  e.stopPropagation();
-};
-const notesContextMenuDelete = document.getElementById(
-  "note_context_menu_delete"
-);
-const notesContextMenuRename = document.getElementById(
-  "note_context_menu_rename"
-);
-
-const notesConfigForm = document.getElementById("note_config_form");
 const notesConfigFormSubmitFunction = (e, id) => {
   e.preventDefault();
   let title = notesConfigForm.note_title.value;
   updateNote(id, { title: title });
-  notesConfigForm.style.display = 'none'
+  notesConfigForm.style.display = 'none';
 };
 
-const addNoteForm = document.getElementById("new_note_form");
 const submitFunction = (e) => {
   e.preventDefault();
   let title = addNoteForm.text.value;
-  title = title ? title : "Untitled";
+  title = title ? title : 'Untitled';
   addNote(new Note(title));
-  addNoteForm.text.value = "";
+  addNoteForm.text.value = '';
 };
-addNoteForm.onsubmit = submitFunction;
 
-includeCssFile("/app/notes/notes.css");
+const openNotesEditMenu = (id) => {
+  notesConfigForm.style.right = '0px';
+  notesConfigForm.onsubmit = (e) => {
+    notesConfigFormSubmitFunction(e, id);
+  };
+  document.getElementById('note_config_close').onclick = (e) => {
+    e.preventDefault();
+    notesConfigForm.style.right = '-25rem';
+  };
+};
+
+const openNotesContextMenu = (e, id) => {
+  e.preventDefault();
+
+  const close = (e) => {
+    notesContextMenu.style.display = 'none';
+    document.removeEventListener('click', cancelContextMenu);
+  };
+
+  notesContextMenu.style.left = e.x + 'px';
+  notesContextMenu.style.top = e.y + 'px';
+  notesContextMenu.style.display = 'block';
+  const cancelContextMenu = document.addEventListener('click', close);
+
+  notesContextMenuDelete.onclick = () => {
+    deleteNote(id);
+    close();
+  };
+  notesContextMenuRename.onclick = () => {
+    openNotesEditMenu(id);
+    close();
+  };
+};
+
+// ------------apply event handlers------------
+
+addNoteForm.onsubmit = submitFunction;
+notesContextMenu.onclick = (e) => {
+  e.stopPropagation();
+};
+
+// ------------other initial config ------------
+
+includeCssFile('/app/notes/notes.css');
 getNotes();
-document.title = "Home Page";
+document.title = 'Home Page';
 
 // ------------classes------------
 
 class Note {
-  constructor(title = "", text = "", tags = "") {
+  constructor(title = '', text = '', tags = '') {
     this.id = id();
     this.title = title;
     this.text = text;
