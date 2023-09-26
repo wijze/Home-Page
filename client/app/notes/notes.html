@@ -25,7 +25,7 @@
         <p>delete</p>
       </div>
       <div id="note_context_menu_rename">
-        <p>rename</p>
+        <p>configure</p>
       </div>
     </div>
 
@@ -38,7 +38,13 @@
         <input type="text" name="note_title" id="note_config_title" />
       </div>
       <div>
-        <button type="submit">Submit</button>
+        <label for="note_config_text">Note:</label>
+        <textarea name="note_text" id="note_config_text" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <div id="note_config_delete" class="danger_button">
+          Delete
+        </div>
       </div>
     </form>
 

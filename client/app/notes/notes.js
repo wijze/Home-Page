@@ -1,26 +1,26 @@
 var notes = {};
+var currentEditId = null;
 
 const id = () =>
   new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
 
 // ------------get elements------------
 
-const notesContextMenu = document.getElementById('note_context_menu');
-
+const notesContextMenu = document.getElementById("note_context_menu");
 const notesContextMenuDelete = document.getElementById(
-  'note_context_menu_delete'
+  "note_context_menu_delete"
 );
 const notesContextMenuRename = document.getElementById(
-  'note_context_menu_rename'
+  "note_context_menu_rename"
 );
 
-const notesConfigForm = document.getElementById('note_config_form');
-const addNoteForm = document.getElementById('new_note_form');
+const notesConfigForm = document.getElementById("note_config_form");
+const addNoteForm = document.getElementById("new_note_form");
 
 // ------------note methods------------
 
 function getNotes() {
-  fetch('/notes_endpoint')
+  fetch("/notes_endpoint")
     .then((res) => res.json())
     .then((jsonString) => {
       notes = JSON.parse(jsonString).notes;
@@ -34,23 +34,29 @@ function getNotes() {
 }
 
 function displayNotes() {
-  const notesContainer = document.getElementById('notes_container');
-  notesContainer.innerHTML = '';
+  const notesContainer = document.getElementById("notes_container");
+  notesContainer.innerHTML = "";
 
   Object.values(notes).forEach((note) => {
-    const newNode = document.createElement('div');
-    newNode.classList.add('note');
-    const title = document.createElement('p');
+    const newNode = document.createElement("div");
+    newNode.classList.add("note");
+    const title = document.createElement("p");
     title.innerText = note.title;
-    const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'D';
-    deleteButton.addEventListener('click', () => {
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "D";
+    deleteButton.addEventListener("click", (e) => {
       deleteNote(note.id);
+      e.stopPropagation();
+      e.preventDefault();
     });
 
     newNode.oncontextmenu = (e) => {
       openNotesContextMenu(e, note.id);
     };
+    newNode.onclick = (e) => {
+      e.stopPropagation()
+      openNotesEditMenu(note.id);
+    }
     newNode.append(title, deleteButton);
     notesContainer.appendChild(newNode);
   });
@@ -58,14 +64,14 @@ function displayNotes() {
 
 function addNote(note) {
   notes[note.id] = note;
-  fetch('/notes_endpoint', {
-    method: 'POST',
+  fetch("/notes_endpoint", {
+    method: "POST",
     body: JSON.stringify({
       note: note.getSavable(),
-      action: 'add',
+      action: "add",
     }),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8',
+      "Content-type": "application/json; charset=UTF-8",
     },
   });
 
@@ -74,14 +80,14 @@ function addNote(note) {
 
 function updateNote(id, newConfig) {
   notes[id].configure(newConfig);
-  fetch('/notes_endpoint', {
-    method: 'POST',
+  fetch("/notes_endpoint", {
+    method: "POST",
     body: JSON.stringify({
       note: notes[id].getSavable(),
-      action: 'update',
+      action: "update",
     }),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8',
+      "Content-type": "application/json; charset=UTF-8",
     },
   });
 
@@ -89,15 +95,18 @@ function updateNote(id, newConfig) {
 }
 
 function deleteNote(id) {
+  if (id == currentEditId) {
+    closeEditMenu();
+  }
   delete notes[id];
-  fetch('/notes_endpoint', {
-    method: 'POST',
+  fetch("/notes_endpoint", {
+    method: "POST",
     body: JSON.stringify({
       id: id,
-      action: 'delete',
+      action: "delete",
     }),
     headers: {
-      'Content-type': 'application/json; charset=UTF-8',
+      "Content-type": "application/json; charset=UTF-8",
     },
   });
 
@@ -106,44 +115,74 @@ function deleteNote(id) {
 
 // ------------event handler functions------------
 
-const notesConfigFormSubmitFunction = (e, id) => {
-  e.preventDefault();
+const notesConfigFormSubmitFunction = (id) => {
   let title = notesConfigForm.note_title.value;
-  updateNote(id, { title: title });
-  notesConfigForm.style.display = 'none';
+  let text = notesConfigForm.note_text.value;
+  updateNote(id, {
+    title: title,
+    text: text,
+  });
 };
 
-const submitFunction = (e) => {
+const NewNoteSubmitFunction = (e) => {
   e.preventDefault();
   let title = addNoteForm.text.value;
-  title = title ? title : 'Untitled';
+  title = title ? title : "Untitled";
   addNote(new Note(title));
-  addNoteForm.text.value = '';
+  addNoteForm.text.value = "";
+};
+
+// does not save
+const closeEditMenu = () => {
+  notesConfigForm.style.right = "-25rem";
+  currentEditId = null;
+  document.onclick = null;
+  notesConfigForm.oncuechange = null;
 };
 
 const openNotesEditMenu = (id) => {
-  notesConfigForm.style.right = '0px';
+  currentEditId = id;
+  notesConfigForm.style.right = "0px";
+  notesConfigForm.note_title.value = notes[id].title;
+  notesConfigForm.note_text.value = notes[id].text;
+  
+  document.addEventListener("click", closeEditMenu);
+  notesConfigForm.onclick = (e) => {
+    e.stopPropagation();
+  };
+  document.getElementById("note_config_close").onclick = (e) => {
+    closeEditMenu();
+  };
+  document.getElementById("note_config_delete").onclick = () => {
+    deleteNote(id);
+  }
+  notesConfigForm.onchange = () => {
+    notesConfigFormSubmitFunction(id);
+  };
   notesConfigForm.onsubmit = (e) => {
-    notesConfigFormSubmitFunction(e, id);
-  };
-  document.getElementById('note_config_close').onclick = (e) => {
     e.preventDefault();
-    notesConfigForm.style.right = '-25rem';
+    closeEditMenu();
   };
+  notesConfigForm.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.ctrlKey) {
+      closeEditMenu();
+    }
+  });
 };
 
 const openNotesContextMenu = (e, id) => {
   e.preventDefault();
+  e.stopPropagation();
 
   const close = (e) => {
-    notesContextMenu.style.display = 'none';
-    document.removeEventListener('click', cancelContextMenu);
+    notesContextMenu.style.display = "none";
+    document.removeEventListener("click", cancelContextMenu);
   };
 
-  notesContextMenu.style.left = e.x + 'px';
-  notesContextMenu.style.top = e.y + 'px';
-  notesContextMenu.style.display = 'block';
-  const cancelContextMenu = document.addEventListener('click', close);
+  notesContextMenu.style.left = e.x + "px";
+  notesContextMenu.style.top = e.y + "px";
+  notesContextMenu.style.display = "block";
+  const cancelContextMenu = document.addEventListener("click", close);
 
   notesContextMenuDelete.onclick = () => {
     deleteNote(id);
@@ -157,21 +196,21 @@ const openNotesContextMenu = (e, id) => {
 
 // ------------apply event handlers------------
 
-addNoteForm.onsubmit = submitFunction;
+addNoteForm.onsubmit = NewNoteSubmitFunction;
 notesContextMenu.onclick = (e) => {
   e.stopPropagation();
 };
 
 // ------------other initial config ------------
 
-includeCssFile('/app/notes/notes.css');
+includeCssFile("/app/notes/notes.css");
 getNotes();
-document.title = 'Home Page';
+document.title = "Home Page";
 
 // ------------classes------------
 
 class Note {
-  constructor(title = '', text = '', tags = '') {
+  constructor(title = "", text = "", tags = "") {
     this.id = id();
     this.title = title;
     this.text = text;

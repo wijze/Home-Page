@@ -28,11 +28,19 @@ function includeCssFile(path) {
   document.head.appendChild(link);
 }
 
-includeCssFile('/globals/global.css');
-
 function create_navbar(page) {
   includeCssFile('/globals/navbar.css');
   navbar_element = document.createElement('div');
   navbar_element.innerHTML = navbar(page);
   document.body.insertBefore(navbar_element, document.body.firstChild);
 }
+
+function addFavicon() {
+  const link = document.createElement('link');
+  link.rel = 'shortcut icon';
+  link.href = '#';
+  document.head.appendChild(link);
+}
+
+addFavicon()
+includeCssFile('/globals/global.css');

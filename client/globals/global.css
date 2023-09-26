@@ -13,7 +13,8 @@ div,
 html,
 body,
 button,
-input {
+input,
+textarea {
   margin: 0;
   padding: 0;
   
@@ -23,7 +24,27 @@ input {
   text-decoration: none;
 }
 
-button {
+input,
+textarea {
+  min-width: 3rem;
+
+  padding: 0 0.4rem 0 0.4rem;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--fg_sec);
+
+  border: 0;
+  border-radius: 0.2rem;
+}
+textarea {
+  padding: 0.4rem;
+}
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+button, .danger_button {
   padding: 0.2rem;
 
   background-color: var(--bg_sec);
@@ -38,6 +59,18 @@ button {
 }
 button:hover, a:hover{
   opacity: 0.8;
+}
+
+.danger_button {
+  width: fit-content;
+
+  background-color: var(--darker_1);
+  color: red;
+
+  cursor: pointer;
+}
+.danger_button:hover {
+  background-color: var(--darker_2);
 }
 
 main{
@@ -69,6 +102,9 @@ main{
 
     --dark_accent: black;
     --light_accent: #647C90
+    
+    --fg_contrast: white;
+    --bg_contrast: black;
 } */
 
 
@@ -82,6 +118,17 @@ main{
   --fg_main: #c1d1dc;
   --bg_sec: #433d4c;
   --fg_sec: white;
+
   --dark_accent: #0e0c0c;
-  --light_accent: #fbcdcd
+  --light_accent: #fbcdcd;
+
+  --fg_contrast: white;
+  --bg_contrast: black;
+}
+
+:root{
+  --lighter_1: rgba(255, 255, 255, 0.1);
+  --lighter_2: rgba(255, 255, 255, 0.2);
+  --darker_1: rgba(0, 0, 0, 0.1);
+  --darker_2: rgba(0, 0, 0, 0.2);
 }
