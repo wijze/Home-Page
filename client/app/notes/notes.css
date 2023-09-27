@@ -2,7 +2,8 @@
 
 .note,
 #new_note_form,
-#note_config_tags > div {
+#note_config_tags > div,
+#search_notes_form > div {
   display: flex;
   flex-direction: row;
   gap: 0.2rem;
@@ -23,24 +24,32 @@
 
 .note > button,
 #new_note_form > button,
-#note_config_tags > div > button {
+#note_config_tags > div > button,
+#search_notes_form > div > button {
   margin-left: auto;
   padding: 0.2rem 0.4rem 0.2rem 0.4rem;
 }
 .note > button:hover,
 #new_note_form > button:hover,
-#note_config_tags > div > button:hover {
+#note_config_tags > div > button:hover,
+#search_notes_form > div > button:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-#new_note_form > input {
+#new_note_form > input,
+#search_notes_form > div > input {
   margin-right: 3%;
 
   max-width: 45rem;
 }
 
+#search_notes_form > div {
+  width: 65%;
+}
+
 .note:hover,
-#new_note_form:hover {
+#new_note_form:hover,
+#search_notes_form > div:hover {
   opacity: 0.9;
 }
 
@@ -55,6 +64,12 @@
 
 #new_note_title {
   flex: 1;
+}
+
+span {
+  font-size: small;
+
+  color: var(--fg_sec);
 }
 
 /* ------------note context menu------------ */
@@ -103,7 +118,7 @@
   background-color: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
 
-  transition: right 0.4s;
+  transition: right 0.5s;
 }
 
 #note_config_form > div > input,

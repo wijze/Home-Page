@@ -1,5 +1,5 @@
-var currentMaxNotesVisible = 1;
-const addNotesVisible = 1;
+var currentMaxNotesVisible = 5;
+const addNotesVisible = 5;
 
 var notes = {};
 var currentEditId = null;
@@ -52,6 +52,9 @@ function displayNotes(display_notes = notes) {
     newNode.classList.add('note');
     const title = document.createElement('p');
     title.innerText = note.title;
+    const tag = document.createElement('span');
+    tag.innerText = note.tags.length ? note.tags.length+"#" : ""; 
+
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'D';
     deleteButton.addEventListener('click', (e) => {
@@ -59,6 +62,7 @@ function displayNotes(display_notes = notes) {
       e.stopPropagation();
       e.preventDefault();
     });
+    newNode.append(title, tag, deleteButton);
 
     newNode.oncontextmenu = (e) => {
       openNotesContextMenu(e, note.id);
@@ -67,7 +71,6 @@ function displayNotes(display_notes = notes) {
       e.stopPropagation();
       openNotesEditMenu(note.id);
     };
-    newNode.append(title, deleteButton);
     notesContainer.appendChild(newNode);
   }
   if (Object.values(display_notes).length > currentMaxNotesVisible) {
@@ -141,17 +144,38 @@ const searchFormSubmit = (e) => {
     displayNotes();
     return;
   }
-  const parts = searchQuery.split('+');
-  let ranking = {};
+  searchForm.search.value = '';
+
+  let ranking = [];
   let parsedQuery = { title: '', tags: [] };
-  for (const part of parts) {
-    let score = 0;
+  for (const part of searchQuery.split('+')) {
     if (part.startsWith('#')) {
-      parsedQuery.tags.push(part);
+      parsedQuery.tags.push(part.slice(1));
     } else {
       parsedQuery.title = part;
     }
   }
+  for (const note of Object.values(notes)) {
+    let score = 0;
+    if (note.title.includes(parsedQuery.title)) {
+      score += 1000;
+      score -= note.title.length;
+    }
+    for (const tag of parsedQuery.tags) {
+      if (note.tags.includes(tag)) {
+        score += 10;
+      }
+    }
+    ranking.push([note.id, score]);
+  }
+  ranking.sort((a, b) => b[1] - a[1]);
+  ranking.slice(0, currentMaxNotesVisible)
+  let final_notes = {};
+  for (const note of ranking) {
+    final_notes[note[0]] = notes[note[0]];
+  }
+  notes = final_notes;
+  displayNotes();
 };
 
 const notesConfigFormSubmitFunction = (id) => {
@@ -167,7 +191,7 @@ const notesConfigFormSubmitFunction = (id) => {
 const NewNoteSubmitFunction = (e) => {
   e.preventDefault();
   let title = addNoteForm.text.value;
-  title = title ? title : 'Untitled';
+  title = title ? title : 'New note';
   addNote(new Note(title));
   addNoteForm.text.value = '';
 };
@@ -245,6 +269,7 @@ const openNotesEditMenu = (id) => {
         tags.push(notesConfigForm.new_tag.value);
         notesConfigFormSubmitFunction(id);
         updateNotesEditMenuTags(removeTag);
+        notesConfigForm.new_tag.value = '';
       }
       notesConfigForm.new_tag.value = '';
     }
@@ -281,6 +306,7 @@ addNoteForm.onsubmit = NewNoteSubmitFunction;
 notesContextMenu.onclick = (e) => {
   e.stopPropagation();
 };
+searchForm.onsubmit = searchFormSubmit;
 
 // ------------other initial config ------------
 
