@@ -1,3 +1,6 @@
+var currentMaxNotesVisible = 1;
+const addNotesVisible = 1;
+
 var notes = {};
 var currentEditId = null;
 var tags = [];
@@ -17,6 +20,7 @@ const notesContextMenuRename = document.getElementById(
 
 const notesConfigForm = document.getElementById('note_config_form');
 const addNoteForm = document.getElementById('new_note_form');
+const searchForm = document.getElementById('search_notes_form');
 
 // ------------note methods------------
 
@@ -34,11 +38,16 @@ function getNotes() {
     });
 }
 
-function displayNotes() {
+function displayNotes(display_notes = notes) {
   const notesContainer = document.getElementById('notes_container');
   notesContainer.innerHTML = '';
 
-  Object.values(notes).forEach((note) => {
+  for (
+    let i = 0;
+    i < Math.min(Object.values(display_notes).length, currentMaxNotesVisible);
+    i++
+  ) {
+    const note = Object.values(display_notes)[i];
     const newNode = document.createElement('div');
     newNode.classList.add('note');
     const title = document.createElement('p');
@@ -60,7 +69,16 @@ function displayNotes() {
     };
     newNode.append(title, deleteButton);
     notesContainer.appendChild(newNode);
-  });
+  }
+  if (Object.values(display_notes).length > currentMaxNotesVisible) {
+    const overflowElement = document.createElement('button');
+    overflowElement.innerText = 'temporary overflow text';
+    overflowElement.onclick = () => {
+      currentMaxNotesVisible += addNotesVisible;
+      displayNotes();
+    };
+    notesContainer.appendChild(overflowElement);
+  }
 }
 
 function addNote(note) {
@@ -115,6 +133,26 @@ function deleteNote(id) {
 }
 
 // ------------event handler functions------------
+
+const searchFormSubmit = (e) => {
+  e.preventDefault();
+  const searchQuery = searchForm.search.value;
+  if (searchQuery == '') {
+    displayNotes();
+    return;
+  }
+  const parts = searchQuery.split('+');
+  let ranking = {};
+  let parsedQuery = { title: '', tags: [] };
+  for (const part of parts) {
+    let score = 0;
+    if (part.startsWith('#')) {
+      parsedQuery.tags.push(part);
+    } else {
+      parsedQuery.title = part;
+    }
+  }
+};
 
 const notesConfigFormSubmitFunction = (id) => {
   let title = notesConfigForm.note_title.value;
