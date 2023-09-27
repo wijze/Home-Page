@@ -14,10 +14,11 @@ html,
 body,
 button,
 input,
-textarea {
+textarea,
+label {
   margin: 0;
   padding: 0;
-  
+
   font-size: large;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -44,7 +45,8 @@ textarea:focus {
   outline: none;
 }
 
-button, .danger_button {
+button,
+.danger_button {
   padding: 0.2rem;
 
   background-color: var(--bg_sec);
@@ -57,7 +59,8 @@ button, .danger_button {
 
   transition: opacity 0.2s;
 }
-button:hover, a:hover{
+button:hover,
+a:hover {
   opacity: 0.8;
 }
 
@@ -73,7 +76,7 @@ button:hover, a:hover{
   background-color: var(--darker_2);
 }
 
-main{
+main {
   margin-left: 1rem;
 }
 
@@ -87,12 +90,9 @@ main{
   flex-direction: column;
 }
 
-
 /* theme 1 dark grey */
 
-
 /* https://www.canva.com/colors/color-palettes/here-at-home/ */
-
 
 /* :root{
     --bg_main: #2b2b2c;
@@ -107,9 +107,7 @@ main{
     --bg_contrast: black;
 } */
 
-
 /* theme 2 dark purple */
-
 
 /* https://lospec.com/palette-list/robots-are-cool */
 
@@ -126,7 +124,7 @@ main{
   --bg_contrast: black;
 }
 
-:root{
+:root {
   --lighter_1: rgba(255, 255, 255, 0.1);
   --lighter_2: rgba(255, 255, 255, 0.2);
   --darker_1: rgba(0, 0, 0, 0.1);

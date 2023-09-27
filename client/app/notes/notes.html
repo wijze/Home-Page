@@ -30,21 +30,32 @@
     </div>
 
     <form action="" id="note_config_form" autocomplete="off">
+      <button type="submit" class="hidden_submit_button"></button>
       <div>
         <button id="note_config_close">Close</button>
       </div>
+
       <div>
         <label for="note_config_title">Title:</label>
         <input type="text" name="note_title" id="note_config_title" />
       </div>
       <div>
         <label for="note_config_text">Note:</label>
-        <textarea name="note_text" id="note_config_text" cols="30" rows="10"></textarea>
+        <textarea
+          name="note_text"
+          id="note_config_text"
+          cols="30"
+          rows="10"
+        ></textarea>
       </div>
       <div>
-        <div id="note_config_delete" class="danger_button">
-          Delete
-        </div>
+        <label for="note_config_tags">Tags:</label>
+        <div id="note_config_tags"></div>
+        <input type="text" placeholder="add new tag" name="new_tag" />
+      </div>
+
+      <div>
+        <div id="note_config_delete" class="danger_button">Delete</div>
       </div>
     </form>
 
