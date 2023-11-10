@@ -2,7 +2,7 @@ nav {
   display: flex;
   flex-direction: row;
 
-  padding: 0.3rem;
+  padding: 0.4em 0 0.4rem;
 
   width: 100%;
 
@@ -16,7 +16,7 @@ nav {
 }
 
 nav > div {
-  margin: 0 0.2rem 0 0.2rem;
+  margin: 0 0 0 0.4rem;
 
   text-align: center;
 

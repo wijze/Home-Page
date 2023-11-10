@@ -6,7 +6,6 @@
 #search_notes_form > div {
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
 
   margin: 0 0 0.5rem 0;
   padding: 0.3rem 0.5rem 0.3rem 0.5rem;
@@ -38,6 +37,8 @@
 
 #new_note_form > input,
 #search_notes_form > div > input {
+  flex: 1;
+
   margin-right: 3%;
 
   max-width: 45rem;
@@ -60,10 +61,6 @@
   max-width: 90%;
 
   overflow: hidden;
-}
-
-#new_note_title {
-  flex: 1;
 }
 
 span {
@@ -135,10 +132,20 @@ span {
   padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
-#note_config_tags > div {
-  margin: 0 0 0.2rem 0;
+#note_config_tags {
+  display: flex;
+  flex-wrap: wrap;
+}
 
+#note_config_tags > div {
+  margin: 0 0.2rem 0.2rem 0;
+
+  width: fit-content;
   max-width: 10rem;
+}
+
+#note_config_tags > div > button {
+  margin-left: 1rem;
 }
 
 .hidden_submit_button {

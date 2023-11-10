@@ -53,7 +53,7 @@ function displayNotes(display_notes = notes) {
     const title = document.createElement('p');
     title.innerText = note.title;
     const tag = document.createElement('span');
-    tag.innerText = note.tags.length ? note.tags.length+"#" : ""; 
+    tag.innerText = note.tags.length ? note.tags.length + '#' : '';
 
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'D';
@@ -157,19 +157,22 @@ const searchFormSubmit = (e) => {
   }
   for (const note of Object.values(notes)) {
     let score = 0;
-    if (note.title.includes(parsedQuery.title)) {
+    if (note.title.toLowerCase().includes(parsedQuery.title.toLowerCase())) {
       score += 1000;
       score -= note.title.length;
     }
     for (const tag of parsedQuery.tags) {
-      if (note.tags.includes(tag)) {
+      lowercase_tags = note.tags.map((tag) => {
+        tag.toLowerCase();
+      });
+      if (lowercase_tags.includes(tag.toLowerCase())) {
         score += 10;
       }
     }
     ranking.push([note.id, score]);
   }
   ranking.sort((a, b) => b[1] - a[1]);
-  ranking.slice(0, currentMaxNotesVisible)
+  ranking.slice(0, currentMaxNotesVisible);
   let final_notes = {};
   for (const note of ranking) {
     final_notes[note[0]] = notes[note[0]];
