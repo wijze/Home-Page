@@ -1,8 +1,11 @@
 /* ------------main notes------------ */
 
+#notes_container{
+  margin-bottom: 0.5rem;
+}
+
 .note,
 #new_note_form,
-#note_config_tags > div,
 #search_notes_form > div {
   display: flex;
   flex-direction: row;
@@ -112,24 +115,39 @@ span {
 
   color: var(--fg_contrast);
 
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
 
   transition: right 0.5s;
+  overflow: scroll;
+}
+
+#note_config_close,
+#note_config_delete {
+  width: fit-content;
+
+  padding: .3rem;
+
+  background-color: var(--bg_contrast);
 }
 
 #note_config_form > div > input,
 #note_config_form > div > textarea {
   width: 80%;
   max-width: 90%;
-}
+  max-height: 20rem;
 
-#note_config_form > div > button {
-  background-color: var(--bg_contrast);
+  padding: 0.3rem;
 }
 
 #note_config_form > div {
+  display: flex;
+  flex-direction: column;
+
   padding: 0.5rem 1rem 0.5rem 1rem;
+}
+#note_config_form > div > label {
+  margin-bottom: 0.2rem;
 }
 
 #note_config_tags {
@@ -139,13 +157,19 @@ span {
 
 #note_config_tags > div {
   margin: 0 0.2rem 0.2rem 0;
+  padding: 0.1rem 0.1rem 0.1rem 0.5rem;
 
   width: fit-content;
   max-width: 10rem;
+
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
+
+  border-radius: 0.5rem;
 }
 
 #note_config_tags > div > button {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .hidden_submit_button {

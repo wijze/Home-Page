@@ -75,7 +75,7 @@ function displayNotes(display_notes = notes) {
   }
   if (Object.values(display_notes).length > currentMaxNotesVisible) {
     const overflowElement = document.createElement('button');
-    overflowElement.innerText = 'temporary overflow text';
+    overflowElement.innerText = 'show more';
     overflowElement.onclick = () => {
       currentMaxNotesVisible += addNotesVisible;
       displayNotes();
