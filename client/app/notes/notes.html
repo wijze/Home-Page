@@ -9,22 +9,35 @@
     <script defer src="/app/notes/notes.js"></script>
   </head>
   <body>
+
+    <!-- navbar is inserted here -->
+
     <main>
-      <h1>Notes</h1>
+      <div id="sidebar">
+        <h2>Categories</h2>
 
-      <form id="search_notes_form" action="">
-        <div>
-          <input type="text" name="search" placeholder="search"/>
-          <button type="submit">S</button>
+        <div id="categories">
+          <div class="category">Test</div>
         </div>
-      </form>
+      </div>
 
-      <div id="notes_container"></div>
+      <div id="main_notes">
+        <h1>Notes</h1>
 
-      <form id="new_note_form" action="" autocomplete="off">
-        <input type="text" name="text" id="new_note_title" placeholder="New note"/>
-        <button type="submit">+</button>
-      </form>
+        <form id="search_notes_form" action="">
+          <div>
+            <input type="text" name="search" placeholder="search"/>
+            <button type="submit">S</button>
+          </div>
+        </form>
+
+        <div id="notes_container"></div>
+
+        <form id="new_note_form" action="" autocomplete="off">
+          <input type="text" name="text" id="new_note_title" placeholder="New note"/>
+          <button type="submit">+</button>
+        </form>
+      </div>
     </main>
 
     <div id="note_context_menu">

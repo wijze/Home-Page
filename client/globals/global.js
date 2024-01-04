@@ -28,11 +28,11 @@ function includeCssFile(path) {
   document.head.appendChild(link);
 }
 
-function create_navbar(page) {
+function create_navbar(page, container=document.body) {
   includeCssFile('/globals/navbar.css');
   navbar_element = document.createElement('div');
   navbar_element.innerHTML = navbar(page);
-  document.body.insertBefore(navbar_element, document.body.firstChild);
+  container.insertBefore(navbar_element, container.firstChild);
 }
 
 function addFavicon() {

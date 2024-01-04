@@ -11,7 +11,6 @@ nav {
   background-color: var(--dark_accent);
   opacity: 0.8;
 
-  border-radius: 0 0 1rem 1rem;
   box-shadow: 0 -1.5rem 3rem var(--light_accent);
 }
 
