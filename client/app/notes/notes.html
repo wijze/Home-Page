@@ -9,6 +9,11 @@
     <!-- contain functions to be called -->
     <script defer src="/app/notes/saveSystem.js"></script>
     <script defer src="/app/notes/eventhandlers.js"></script>
+    <!-- individual parts -->
+    <script defer src="/app/notes/configForm.js"></script>
+    <script defer src="/app/notes/searchNotes.js"></script>
+    <script defer src="/app/notes/categories.js"></script>
+    <script defer src="/app/notes/contextmenus.js"></script>
     <!-- the notes.js file is the main js file -->
     <script defer src="/app/notes/notes.js"></script>
   </head>
@@ -20,16 +25,16 @@
       <div id="sidebar">
         <h2>Categories</h2>
 
-        <div id="categories">
-          <div class="category" id="active_category">
-            <p>All</p>
-          </div>
-          <div class="category">
-            <p>Test</p>
-          </div>
+        <div>
+          <div id="categories"></div>
+
           <div class="category" id="create_new_category">
             <p>Create new</p>
           </div>
+          <form action="" id="new_category_form">
+            <input name="name" type="text">
+            <button type="submit" class="hidden_submit_button"></button>
+          </form>
         </div>
       </div>
 
@@ -52,12 +57,18 @@
       </div>
     </main>
 
-    <div id="note_context_menu">
+    <div id="note_context_menu" class="context_menu">
       <div id="note_context_menu_delete">
         <p>delete</p>
       </div>
       <div id="note_context_menu_rename">
         <p>configure</p>
+      </div>
+    </div>
+
+    <div id="category_context_menu" class="context_menu">
+      <div id="category_context_menu_delete">
+        <p>delete</p>
       </div>
     </div>
 

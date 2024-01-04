@@ -15,13 +15,15 @@ function getNotes() {
   fetch('/notes_endpoint')
     .then((res) => res.json())
     .then((jsonString) => {
-      notes = JSON.parse(jsonString).notes;
-      for (let id in notes) {
+      const parsed = JSON.parse(jsonString);
+      categories = parsed.categories
+      for (let id in parsed.notes) {
         let n = new Note();
-        n.configure(notes[id]);
+        n.configure(parsed.notes[id]);
         notes[id] = n;
       }
       displayNotes();
+      displayCategories();
     });
 }
 
@@ -113,7 +115,7 @@ function addCategory(category) {
     action: 'addCategory',
   })
 
-  // update categories display
+  displayCategories()
 }
 
 function deleteCategory(id) {
@@ -124,7 +126,7 @@ function deleteCategory(id) {
     action: 'deleteCategory',
   })
 
-  // update categories display
+  displayCategories()
 }
 
 
@@ -143,11 +145,12 @@ class Category {
 }
 
 class Note {
-  constructor(title = '', text = '', tags = []) {
+  constructor(title = '', text = '', tags = [], category=null) {
     this.id = id();
     this.title = title;
     this.text = text;
     this.tags = tags;
+    this.category = category
   }
 
   getSavable() {
@@ -157,7 +160,6 @@ class Note {
       text: this.text,
       tags: this.tags,
       todo: false,
-      priority: 0,
     };
   }
 
@@ -167,8 +169,8 @@ class Note {
 }
   
 class Todo extends Note {
-  constructor(title, text, tags, priority) {
-    super(title, text, tags);
+  constructor(title, text, tags, category, priority) {
+    super(title, text, tags, category);
     this.priority = priority;
   }
 

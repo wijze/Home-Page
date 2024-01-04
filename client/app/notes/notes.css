@@ -43,6 +43,12 @@ h2{
 
   font-size: medium;
 }
+#new_category_form {
+  display: none;
+}
+#new_category_form > input {
+  width: 100%;
+}
 
 #active_category {
   background-color: var(--lighter_2);
@@ -133,7 +139,7 @@ span {
 
 /* ------------note context menu------------ */
 
-#note_context_menu {
+.context_menu {
   display: none;
 
   position: absolute;
@@ -145,13 +151,13 @@ span {
   border-radius: 0.2rem;
 }
 
-#note_context_menu > div {
+.context_menu > div {
   padding: 0.2rem;
 
   cursor: pointer;
 }
 
-#note_context_menu > div:hover {
+.context_menu > div:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
