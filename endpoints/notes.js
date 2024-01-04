@@ -19,15 +19,20 @@ function handlePush(req, res) {
       res.status(500).send('Error reading file.');
     } else {
       let json = JSON.parse(data);
+      let action = req.body.action
 
-      if (req.body.action == 'add') {
+      if (action == 'addNote') {
         json.notes[req.body.note.id] = req.body.note;
-      } else if (req.body.action == 'delete') {
+      } else if (action == 'deleteNote') {
         delete json.notes[req.body.id];
-      } else if (req.body.action == 'update') {
+      } else if (action == 'updateNote') {
         json.notes[req.body.note.id] = req.body.note;
+      } else if (action == "addCategory") {
+        json.categories[req.body.category.id] = req.body.category
+      } else if (action == 'deleteCategory') {
+        delete json.categories[req.body.id];
       } else {
-        res.status(400).send('invalid action');
+        res.status(400).send('invalid action: '+action);
         return;
       }
       json = JSON.stringify(json, null, 2);

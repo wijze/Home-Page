@@ -1,6 +1,15 @@
 const id = () =>
   new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
 
+const sendData = (body) => {
+  fetch('/notes_endpoint', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+}
 
 function getNotes() {
   fetch('/notes_endpoint')
@@ -18,32 +27,20 @@ function getNotes() {
 
 function addNote(note) {
   notes[note.id] = note;
-  fetch('/notes_endpoint', {
-    method: 'POST',
-    body: JSON.stringify({
-      note: note.getSavable(),
-      action: 'add',
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
+  sendData({
+    note: note.getSavable(),
+    action: 'addNote',
+  })
 
   displayNotes();
 }
   
 function updateNote(id, newConfig) {
   notes[id].configure(newConfig);
-  fetch('/notes_endpoint', {
-    method: 'POST',
-    body: JSON.stringify({
-      note: notes[id].getSavable(),
-      action: 'update',
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
+  sendData({
+    note: notes[id].getSavable(),
+    action: 'updateNote',
+  })
 
   displayNotes();
 }
@@ -54,16 +51,10 @@ function deleteNote(id) {
     closeEditMenu();
   }
   delete notes[id];
-  fetch('/notes_endpoint', {
-    method: 'POST',
-    body: JSON.stringify({
-      id: id,
-      action: 'delete',
-    }),
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-    },
-  });
+  sendData({
+    id: id,
+    action: 'deleteNote',
+  })
 
   displayNotes();
 }
@@ -115,6 +106,41 @@ function displayNotes(display_notes = notes) {
   }
 }
 
+function addCategory(category) {
+  categories[category.id] = category;
+  sendData({
+    category: category.getSavable(),
+    action: 'addCategory',
+  })
+
+  // update categories display
+}
+
+function deleteCategory(id) {
+  // check if category is current category
+  delete categories[id];
+  sendData({
+    id: id,
+    action: 'deleteCategory',
+  })
+
+  // update categories display
+}
+
+
+class Category {
+  constructor(name) {
+    this.name = name
+    this.id = id()
+  }
+
+  getSavable(){
+    return {
+      id:this.id,
+      name:this.name
+    }
+  }
+}
 
 class Note {
   constructor(title = '', text = '', tags = []) {

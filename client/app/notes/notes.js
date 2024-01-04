@@ -3,6 +3,7 @@ var currentMaxNotesVisible = 5;
 const addNotesVisible = 5;
 
 var notes = {};
+var categories = {};
 var currentEditId = null;
 
 // ------------initial config ------------

@@ -31,14 +31,24 @@ h2{
 .category {
   padding: 0.2rem;
 
-  text-align: center;
-
   border-radius: 0.1rem;
 
   cursor: pointer;
 }
 .category:hover {
   background-color: var(--bg_sec);
+}
+.category > p {
+  margin-left: 1rem;
+
+  font-size: medium;
+}
+
+#active_category {
+  background-color: var(--lighter_2);
+}
+#create_new_category {
+  color: var(--light_accent);
 }
 
 
