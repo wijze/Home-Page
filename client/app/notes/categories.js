@@ -70,7 +70,6 @@ const displayCategories = () => {
     }
     el.ondragover = (e) => e.preventDefault()
     el.ondrop = (e) => {
-      console.log("drop:"+e.dataTransfer.getData("source"))
       updateNote(e.dataTransfer.getData("source"), {category:id})
     }
 

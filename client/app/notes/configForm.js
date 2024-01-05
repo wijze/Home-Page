@@ -1,12 +1,15 @@
 const notesConfigForm = document.getElementById("note_config_form");
+const notesConfigCategories = document.getElementById('note_config_category')
 
 const notesConfigFormSubmitFunction = (id) => {
   let title = notesConfigForm.note_title.value;
   let text = notesConfigForm.note_text.value;
+  let category = notesConfigCategories.value
   updateNote(id, {
     title: title,
     text: text,
     tags: tags,
+    category:category
   });
 };
 
@@ -33,6 +36,21 @@ const updateNotesEditMenuTags = (remove) => {
   }
 };
 
+const updateCategoryOptions = () => {
+  notesConfigCategories.innerHTML = ''
+  const addOption = (id, name) => {
+    const el = document.createElement("option")
+    el.value = id
+    el.innerText = name
+    notesConfigCategories.appendChild(el)
+  }
+  addOption("all", "All")
+  for (c of Object.values(categories)){
+    addOption(c.id, c.name)
+  }
+  notesConfigCategories.value = notes[currentEditId].category
+}
+
 const openNotesEditMenu = (id) => {
   closeEditMenu();
   currentEditId = id;
@@ -50,6 +68,8 @@ const openNotesEditMenu = (id) => {
     }
   };
   updateNotesEditMenuTags(removeTag);
+
+  updateCategoryOptions()
 
   // ways to close menu
   document.addEventListener("click", closeEditMenu);

@@ -203,9 +203,9 @@ span {
 }
 
 #note_config_form > div > input,
-#note_config_form > div > textarea {
+#note_config_form > div > textarea,
+#note_config_form > div > select {
   width: 80%;
-  max-width: 90%;
   max-height: 20rem;
 
   padding: 0.3rem;

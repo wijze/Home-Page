@@ -16,7 +16,8 @@ body,
 button,
 input,
 textarea,
-label {
+label,
+select {
   margin: 0;
   padding: 0;
 
@@ -27,7 +28,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select{
   min-width: 3rem;
 
   padding: 0 0.4rem 0 0.4rem;
@@ -37,6 +39,11 @@ textarea {
 
   border: 0;
   border-radius: 0.2rem;
+}
+/* because select is special */
+select {
+  background-color: var(--bg_sec);
+  outline: none;
 }
 textarea {
   padding: 0.4rem;
