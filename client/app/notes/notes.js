@@ -5,6 +5,7 @@ const addNotesVisible = 5;
 var notes = {};
 var categories = {};
 var currentEditId = null;
+var currenCategoryId = "all"
 
 // ------------initial config ------------
 document.title = "Home Page";

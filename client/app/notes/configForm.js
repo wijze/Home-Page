@@ -61,7 +61,13 @@ const openNotesEditMenu = (id) => {
   };
   document.getElementById("note_config_delete").onclick = () => {
     deleteNote(id);
+    // closing is handled inside delete
   };
+  document.addEventListener("keydown", (e) => {
+    if (e.key == "Escape"){
+      closeEditMenu()
+    }
+  })
 
   // save/ submit
   notesConfigForm.onchange = () => {

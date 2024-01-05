@@ -28,6 +28,7 @@ function getNotes() {
 }
 
 function addNote(note) {
+  note.category = currenCategoryId
   notes[note.id] = note;
   sendData({
     note: note.getSavable(),
@@ -72,6 +73,11 @@ function displayNotes(display_notes = notes) {
     i++
   ) {
     const note = Object.values(display_notes)[i];
+    if (!(note.category == currenCategoryId || currenCategoryId == "all")){
+      continue
+    }
+
+    // create the element
     const newNode = document.createElement('div');
     newNode.classList.add('note');
     const title = document.createElement('p');
@@ -79,6 +85,7 @@ function displayNotes(display_notes = notes) {
     const tag = document.createElement('span');
     tag.innerText = note.tags.length ? note.tags.length + '#' : '';
 
+    // add delete button
     const deleteButton = document.createElement('button');
     deleteButton.innerText = 'D';
     deleteButton.addEventListener('click', (e) => {
@@ -88,6 +95,7 @@ function displayNotes(display_notes = notes) {
     });
     newNode.append(title, tag, deleteButton);
 
+    // add other event handlers
     newNode.oncontextmenu = (e) => {
       openNotesContextMenu(e, note.id);
     };
@@ -95,6 +103,12 @@ function displayNotes(display_notes = notes) {
       e.stopPropagation();
       openNotesEditMenu(note.id);
     };
+
+    // make element draggable
+    newNode.draggable = true
+    newNode.ondragstart = (e) => {
+      e.dataTransfer.setData("source", note.id)
+    }
     notesContainer.appendChild(newNode);
   }
   if (Object.values(display_notes).length > currentMaxNotesVisible) {
@@ -119,7 +133,9 @@ function addCategory(category) {
 }
 
 function deleteCategory(id) {
-  // check if category is current category
+  if (id == currenCategoryId){
+    setActiveCategory("all")
+  }
   delete categories[id];
   sendData({
     id: id,
@@ -145,7 +161,7 @@ class Category {
 }
 
 class Note {
-  constructor(title = '', text = '', tags = [], category=null) {
+  constructor(title = '', text = '', tags = [], category="all") {
     this.id = id();
     this.title = title;
     this.text = text;
@@ -159,6 +175,7 @@ class Note {
       title: this.title,
       text: this.text,
       tags: this.tags,
+      category: this.category,
       todo: false,
     };
   }

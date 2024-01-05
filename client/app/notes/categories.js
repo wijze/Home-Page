@@ -42,15 +42,43 @@ const openNewCategoryMenu = () => {
   }
 }
 
+const setActiveCategory = (id) => {
+  currenCategoryId = id
+  displayNotes()
+  displayCategories()
+}
+
 const displayCategories = () => {
   categoriesWrapper.innerHTML = ''
-  Object.values(categories).forEach( c => {
+
+  const create_el = (n, id, contextMenu) => {
+    // creat element
     const el = document.createElement("div")
     el.classList.add("category")
     const elName = document.createElement("p")
-    elName.innerText = c.name
-    el.oncontextmenu = (e) => openCategoryContextMenu(e, c.id)
+    elName.innerText = n
     el.appendChild(elName)
+
+    // apply event handlers
+    if (contextMenu){
+      el.oncontextmenu = (e) => openCategoryContextMenu(e, id)
+    }
+    if (id == currenCategoryId){
+      el.id = "active_category"
+    } else {
+      el.onclick = () => setActiveCategory(id)
+    }
+    el.ondragover = (e) => e.preventDefault()
+    el.ondrop = (e) => {
+      console.log("drop:"+e.dataTransfer.getData("source"))
+      updateNote(e.dataTransfer.getData("source"), {category:id})
+    }
+
     categoriesWrapper.appendChild(el)
+  }
+
+  create_el("All", "all", false)
+  Object.values(categories).forEach( c => {
+    create_el(c.name, c.id, true)
   })
 }

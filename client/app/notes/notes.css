@@ -48,6 +48,12 @@ h2{
 }
 #new_category_form > input {
   width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+
+  font-size: medium;
 }
 
 #active_category {
