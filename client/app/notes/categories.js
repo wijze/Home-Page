@@ -3,44 +3,14 @@ const newCategoryForm = document.getElementById('new_category_form')
 
 const categoriesWrapper = document.getElementById('categories')
 
-const newCategorySubmitFunction = () => {
+const submitNewCategory = () => {
   let name = newCategoryForm.name.value;
   name = name ? name : "New Category";
   addCategory(new Category(name))
   newCategoryForm.name.value = "";
 };
 
-const openNewCategoryMenu = () => {
-  newCategoryButton.style.display = "none"
-  newCategoryForm.style.display = "block"
-  newCategoryForm.name.focus()
-
-  const keyHandler = (e) => {
-    if (e.key == "Escape"){
-      exit()
-    }
-  }
-  const exit = () => {
-    newCategoryButton.style.display = "block"
-    newCategoryForm.style.display = "none"
-    document.removeEventListener('keydown', keyHandler)
-    document.removeEventListener("mousedown", clickHandler)
-  }
-  const clickHandler = (e) => {
-    if (newCategoryForm.name.value != ""){
-      newCategorySubmitFunction()
-    }
-    exit()
-  }
-  document.addEventListener("keydown", keyHandler)
-  document.addEventListener("mousedown", clickHandler)
-
-  newCategoryForm.onsubmit = (e) => {
-    e.preventDefault();
-    newCategorySubmitFunction()
-    exit()
-  }
-}
+const createNewCategoryMenu = () => addNewMenu(newCategoryButton, newCategoryForm, submitNewCategory)
 
 const setActiveCategory = (id) => {
   currenCategoryId = id

@@ -18,5 +18,5 @@ const NewNoteSubmitFunction = (e) => {
 function applyEventHandlers() {
   addNoteForm.onsubmit = NewNoteSubmitFunction;
   searchForm.onsubmit = searchFormSubmit;
-  newCategoryButton.onclick = openNewCategoryMenu;
+  createNewCategoryMenu();
 }

@@ -1,3 +1,31 @@
+const id = () =>
+  new Date().getTime().toString(36) + Math.random().toString(36).slice(2);
+
+const sendData = (endpoint, body) => {
+  fetch(endpoint, {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+}
+
+function includeCssFile(path) {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = path;
+  document.head.appendChild(link);
+}
+
+function addFavicon() {
+  const link = document.createElement('link');
+  link.rel = 'shortcut icon';
+  link.href = '#';
+  document.head.appendChild(link);
+}
+
 function navbar(page) {
   return `
     <nav>
@@ -11,21 +39,13 @@ function navbar(page) {
           <div>Notes</div>
         </a>
       </div>
-      <div ${page == 'email' ? 'id="active"' : ''}>
-        <a href="/email">
-          <div>Email</div>
+      <div ${page == 'todo' ? 'id="active"' : ''}>
+        <a href="/todo">
+          <div>Todo</div>
         </a>
       </div>
     </nav>
   `;
-}
-
-function includeCssFile(path) {
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = path;
-  document.head.appendChild(link);
 }
 
 function create_navbar(page, container=document.body) {
@@ -33,13 +53,6 @@ function create_navbar(page, container=document.body) {
   navbar_element = document.createElement('div');
   navbar_element.innerHTML = navbar(page);
   container.insertBefore(navbar_element, container.firstChild);
-}
-
-function addFavicon() {
-  const link = document.createElement('link');
-  link.rel = 'shortcut icon';
-  link.href = '#';
-  document.head.appendChild(link);
 }
 
 addFavicon()

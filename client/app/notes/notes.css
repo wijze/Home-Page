@@ -24,10 +24,6 @@ main{
   border-right: 1px solid var(--bg_contrast);
 }
 
-h2{
-  font-size: large;
-}
-
 .category {
   padding: 0.2rem;
 
@@ -241,8 +237,4 @@ span {
 
 #note_config_tags > div > button {
   margin-left: 0.5rem;
-}
-
-.hidden_submit_button {
-  display: none;
 }
