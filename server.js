@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 
-const { handlePush, getNotes } = require('./endpoints/notes');
+const { handleNotePush, getNotes } = require('./endpoints/notes');
+const { handleTodoPush, getTodo } = require('./endpoints/todo')
 
 const app = express();
 const port = 8000;
@@ -24,12 +25,21 @@ app.get('/app', (req, res) => {
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'app', 'notes', 'notes.html'));
 });
+app.get('/todo', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'app', 'todo', 'todo.html'));
+});
 
 app.post('/notes_endpoint', (req, res) => {
-  handlePush(req, res);
+  handleNotePush(req, res);
 });
 app.get('/notes_endpoint', (req, res) => {
   getNotes(req, res);
+});
+app.post('/todo_endpoint', (req, res) => {
+  handleTodoPush(req, res);
+});
+app.get('/todo_endpoint', (req, res) => {
+  getTodo(req, res);
 });
 
 app.use((req, res, next) => {

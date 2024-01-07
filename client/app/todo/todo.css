@@ -60,6 +60,51 @@ main {
 /* ------------board------------ */
 
 
-#board {
+#board_panel {
+  flex: 1;
+
   margin-left: 0.5rem;
+}
+
+#board,
+#groups_wrapper {
+  display: flex;
+  flex-direction: row;
+
+  gap: 0.5rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  
+  min-width: 10rem;
+  width: 30%;
+  max-width: 20rem;
+}
+.group:hover{
+  opacity: 1;
+}
+
+.group > h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.todo {
+  cursor: pointer;
+  
+  background-color: var(--lighter_1);
+}
+.group > div:last-child {
+  margin-bottom: 0 !important;
+}
+
+#create_new_group_button {
+  height: fit-content;
+  width: fit-content;
+
+  padding: 1rem 0.5rem 1rem 0.5rem;
+}
+#create_new_group_button > h3 {
+  margin: 0;
 }

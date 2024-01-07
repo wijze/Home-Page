@@ -76,6 +76,45 @@ a:hover {
   opacity: 0.8;
 }
 
+.container {
+  margin: 0 0 0.5rem 0;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+
+  overflow: hidden;
+
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
+
+  border-radius: 0.5rem;
+}
+.container:hover {
+  opacity: 0.9;
+}
+
+
+/* context menu */
+.context_menu {
+  display: none;
+
+  position: absolute;
+
+  background-color: var(--bg_sec);
+  color: var(--fg_sec);
+
+  border: 1px solid var(--light_accent);
+  border-radius: 0.2rem;
+}
+
+.context_menu > div {
+  padding: 0.2rem;
+
+  cursor: pointer;
+}
+
+.context_menu > div:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .danger_button {
   width: fit-content;
 

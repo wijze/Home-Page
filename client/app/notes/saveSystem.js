@@ -120,16 +120,18 @@ function addCategory(category) {
 }
 
 function deleteCategory(id) {
-  if (id == currenCategoryId){
-    setActiveCategory("all")
-  }
   delete categories[id];
   sendData('/notes_endpoint', {
     id: id,
     action: 'deleteCategory',
   })
-
-  displayCategories()
+  
+  if (id == currenCategoryId){
+    setActiveCategory("all")
+    // setActiveCategory already updates
+  } else {
+    displayCategories()
+  }
 }
 
 
@@ -162,26 +164,11 @@ class Note {
       title: this.title,
       text: this.text,
       tags: this.tags,
-      category: this.category,
-      todo: false,
+      category: this.category
     };
   }
 
   configure(newConfig) {
     Object.assign(this, newConfig);
-  }
-}
-  
-class Todo extends Note {
-  constructor(title, text, tags, category, priority) {
-    super(title, text, tags, category);
-    this.priority = priority;
-  }
-
-  getSavable() {
-    obj = super.getSavable();
-    obj.todo = true;
-    obj.priority = this.priority;
-    return obj;
   }
 }

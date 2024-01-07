@@ -8,31 +8,59 @@
     <script src="/globals/global.js"></script>
     <script src="/globals/addNewMenu.js"></script>
     <script defer src="/app/todo/boards.js"></script>
+    <script defer src="/app/todo/todoHelper.js"></script>
     <!-- main js file -->
     <script defer src="/app/todo/todo.js"></script>
   </head>
   <body>
     <!-- navbar is inserted here -->
     <main>
-        <div id="sidebar">
-            <h2>Boards</h2>
+      <div id="sidebar">
+        <h2>Boards</h2>
 
-            <div>
-                <div id="siderbar_boards"></div>
-      
-                <div class="sidebar_board" id="create_new_board">
-                  <p>Create new</p>
-                </div>
-                <form autocomplete="off" action="" id="new_board_form">
-                  <input name="name" type="text">
-                  <button type="submit" class="hidden_submit_button"></button>
-                </form>
-              </div>
+        <div>
+          <div id="siderbar_boards"></div>
+    
+          <div class="sidebar_board" id="create_new_board">
+            <p>Create new</p>
+          </div>
+          <form autocomplete="off" action="" id="new_board_form">
+            <input name="name" type="text">
+            <button type="submit" class="hidden_submit_button"></button>
+          </form>
         </div>
+      </div>
+
+      <div id="board_panel">
+        <h1>Todo</h1>
+
         <div id="board">
-            <h1>Todo</h1>
+          <div id="groups_wrapper">
+            <div class="container group">
+              <h3>Testname</h3>
+              <div class="container todo">Test1</div>
+              <div class="container todo">Test2</div>
+            </div>
+            <div class="container group">
+              <h3>Testname2</h3>
+              <div class="container todo">Test1</div>
+              <div class="container todo">Test2</div>
+            </div>
+          </div>
+
+          <div class="container group" id="create_new_group_button">
+            <h3>Create New Group</h3>
+          </div>
         </div>
+        
+      </div>
     </main>
+
+    <div id="board_context_menu" class="context_menu">
+      <div id="board_context_menu_delete">
+        <p>delete</p>
+      </div>
+    </div>
 
     <script>
       create_navbar();
