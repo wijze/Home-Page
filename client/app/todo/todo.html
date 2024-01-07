@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="/globals/global.js"></script>
+    <script src="/globals/addNewMenu.js"></script>
+    <script defer src="/app/todo/boards.js"></script>
+    <!-- main js file -->
+    <script defer src="/app/todo/todo.js"></script>
+  </head>
+  <body>
+    <!-- navbar is inserted here -->
+    <main>
+        <div id="sidebar">
+            <h2>Boards</h2>
+
+            <div>
+                <div id="siderbar_boards"></div>
+      
+                <div class="sidebar_board" id="create_new_board">
+                  <p>Create new</p>
+                </div>
+                <form autocomplete="off" action="" id="new_board_form">
+                  <input name="name" type="text">
+                  <button type="submit" class="hidden_submit_button"></button>
+                </form>
+              </div>
+        </div>
+        <div id="board">
+            <h1>Todo</h1>
+        </div>
+    </main>
+
+    <script>
+      create_navbar();
+    </script>
+  </body>
+</html>

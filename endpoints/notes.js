@@ -48,4 +48,4 @@ function handlePush(req, res) {
   });
 }
 
-module.exports = { 'getNotes': getNotes, 'handlePush': handlePush };
+module.exports = { 'getNotes': getNotes, 'handleNotePush': handlePush };

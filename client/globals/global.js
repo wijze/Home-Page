@@ -26,6 +26,26 @@ function addFavicon() {
   document.head.appendChild(link);
 }
 
+const openContextMenu = (e, el) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  el.onclick = (e) => {
+    e.stopPropagation()
+  };
+
+  const close = (e) => {
+    el.style.display = "none";
+    document.removeEventListener("click", close);
+  };
+
+  el.style.left = e.x + "px";
+  el.style.top = e.y + "px";
+  el.style.display = "block";
+  document.addEventListener("click", close);
+  return close
+}
+
 function navbar(page) {
   return `
     <nav>
