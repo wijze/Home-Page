@@ -1,8 +1,8 @@
 const addNewMenu = (iniateButton, form, submit) => {
-  iniateButton.onclick = () => openAddNewMenu(iniateButton, form, submit)
+  iniateButton.onclick = () => openNewMenu(iniateButton, form, submit)
 }
 
-const openAddNewMenu = (iniateButton, form, submit) => {
+const openNewMenu = (iniateButton, form, submit) => {
   iniateButton.style.display = "none"
   form.style.display = "block"
   form.name.focus()

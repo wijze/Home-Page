@@ -33,24 +33,27 @@
 
       <div id="board_panel">
         <h1>Todo</h1>
-
         <div id="board">
-          <div id="groups_wrapper">
-            <div class="container group">
-              <h3>Testname</h3>
-              <div class="container todo">Test1</div>
-              <div class="container todo">Test2</div>
-            </div>
-            <div class="container group">
-              <h3>Testname2</h3>
-              <div class="container todo">Test1</div>
-              <div class="container todo">Test2</div>
-            </div>
-          </div>
-
+          <div id="groups_wrapper"></div>
+  
           <div class="container group" id="create_new_group_button">
             <h3>Create New Group</h3>
           </div>
+
+          <template id="newTodo">
+            <div class="container todo create_new_todo_button">
+              <p>Create new</p>
+            </div>
+            <form autocomplete="off" action="" class="create_new_todo_form">
+              <input name="name" type="text">
+              <button type="submit" class="hidden_submit_button"></button>
+            </form>
+          </template>
+        </div>
+
+        <div id="board_not_open_message">
+          <h3>You haven't opened a board</h3>
+          <p>Please create or open a board</p>
         </div>
         
       </div>
@@ -58,6 +61,11 @@
 
     <div id="board_context_menu" class="context_menu">
       <div id="board_context_menu_delete">
+        <p>delete</p>
+      </div>
+    </div>
+    <div id="todo_contextmenu" class="context_menu">
+      <div id="todo_contextmenu_delete">
         <p>delete</p>
       </div>
     </div>

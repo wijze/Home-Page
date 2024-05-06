@@ -1,5 +1,13 @@
 const groupWrapper = document.getElementById('groups_wrapper')
 
+const boardElement = document.getElementById('board')
+const boardNotOpenMessage = document.getElementById('board_not_open_message')
+
+const newTodoTemplate = document.getElementById('newTodo')
+
+const todoContextmenu = document.getElementById('todo_contextmenu')
+const todoContextmenuDelete = document.getElementById('todo_contextmenu_delete')
+
 // should maybe be optimized to load only current board
 function load(){
   fetch('/todo_endpoint')
@@ -10,20 +18,35 @@ function load(){
       groups = parsed.groups
       for (let id in parsed.todos) {
         let t = new Todo();
-        t.configure(parsed.notes[id]);
+        t.configure(parsed.todos[id]);
         todos[id] = t;
       }
       
       displaySidebar()
-      // display board
+      displayBoard()
     });
 }
 
+const addTodo = (todo) => {
+  todos[todo.id] = todo;
+  sendData('/todo_endpoint', {
+    todo: todo.getSavable(),
+    action: 'addTodo',
+  })
+
+  displayBoard()
+}
+
 const displayBoard = () => {
+  groupWrapper.innerHTML = ''
+
   if (currentBoardId == null){
-    // display message to create or open board
+    boardElement.style.display = "none"
+    boardNotOpenMessage.style.display = "block"
     return
   }
+  boardElement.style.display = "flex"
+  boardNotOpenMessage.style.display = "none"
 
   Object.values(groups).forEach((g) => {
     if (g.board == currentBoardId){
@@ -41,6 +64,21 @@ const displayBoard = () => {
           groupEl.appendChild(todoEl)
         }
       })
+
+      const newTodoEl = newTodoTemplate.content.cloneNode(true);
+      const newTodoButton = newTodoEl.firstElementChild
+      const newTodoForm = newTodoEl.lastElementChild
+      newTodoForm.style.display = "none"
+      groupEl.appendChild(newTodoEl)
+  
+      const newTodoSubmit = () => {
+        let name = newTodoForm.name.value;
+        name = name ? name : "New Todo";
+        addTodo(new Todo(g.id, name))
+        newTodoForm.name.value = "";
+      }
+      addNewMenu(newTodoButton, newTodoForm, newTodoSubmit)
+
       groupWrapper.appendChild(groupEl)
     }
   })

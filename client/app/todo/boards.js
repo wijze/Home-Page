@@ -13,7 +13,7 @@ const addBoard = (board) => {
     action: 'addBoard',
   })
 
-  displaySidebar()
+  setActiveBoard(board.id)
 }
 
 function deleteBoard(id) {
@@ -34,7 +34,7 @@ function deleteBoard(id) {
 const setActiveBoard = (id) => {
   currentBoardId = id
   displaySidebar()
-  // update todos
+  displayBoard()
 }
 
 const openBoardContextMenu = (e, id) => {

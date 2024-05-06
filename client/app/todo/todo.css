@@ -39,7 +39,8 @@ main {
 #new_board_form {
   display: none;
 }
-#new_board_form > input {
+#new_board_form > input,
+.group > form > input {
   width: 100%;
   
   box-sizing: border-box;
@@ -73,6 +74,9 @@ main {
 
   gap: 0.5rem;
 }
+#board {
+  display: none;
+}
 
 .group {
   display: flex;
@@ -91,12 +95,34 @@ main {
 }
 
 .todo {
+  padding: 0.2rem;
+
   cursor: pointer;
   
   background-color: var(--lighter_1);
+
+  border-radius: 0.2rem;
 }
 .group > div:last-child {
   margin-bottom: 0 !important;
+}
+
+.group > form > input {
+  box-sizing: border-box;
+  width: 8rem;
+  font-size: large !important;
+}
+
+.create_new_todo_button {
+  margin-bottom: 0;
+
+  background-color: rgba(0,0,0,0);
+}
+.create_new_todo_button:hover{
+  background-color: var(--lighter_1);
+}
+.create_new_todo_form{
+  margin-bottom: 0;
 }
 
 #create_new_group_button {
@@ -104,7 +130,18 @@ main {
   width: fit-content;
 
   padding: 1rem 0.5rem 1rem 0.5rem;
+
+  background-color: var(--lighter_1);
+
+  cursor: pointer;
+}
+#create_new_group_button:hover {
+  background-color: var(--lighter_2);
 }
 #create_new_group_button > h3 {
   margin: 0;
+}
+
+#board_not_open_message > h3 {
+  margin: 0 0 0.5rem 0;
 }
